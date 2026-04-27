@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FAF9F6">
+  <title>Мастерская Авторов — научим подавать материал, а не упрощать его · EDL</title>
+  <meta name="description" content="Онлайн-мастерская для людей с экспертизой, у которых нет опыта публичной подачи. 4–5 занятий по 90 минут. От 12 000 ₽. Старт первого потока — июнь 2026.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Мастерская Авторов · EDL">
+  <meta property="og:description" content="4–5 занятий по 90 минут. Для авторов с экспертизой, без опыта публичной подачи. Старт — июнь 2026.">
+  <meta property="og:url" content="https://elephantdreams.ru/masterskaya.html">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:image" content="https://elephantdreams.ru/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Page-specific additions. Scoped under .ms-* to avoid touching the global stylesheet. -->
+  <style>
+    /* Kasdev quote strip — pulled directly from interviews, attribution required */
+    .ms-quotes {
+      display: grid;
+      gap: var(--s-5);
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) {
+      .ms-quotes { grid-template-columns: repeat(4, 1fr); }
+    }
+    .ms-quote {
+      border-top: 1px solid var(--border-medium);
+      padding-top: var(--s-5);
+    }
+    .ms-quote__text {
+      font-family: var(--ff-display);
+      font-weight: 600;
+      font-size: var(--fs-h4-fluid);
+      line-height: var(--lh-snug);
+      letter-spacing: var(--tracking-snug);
+      color: var(--text-primary);
+      margin-bottom: var(--s-4);
+    }
+    .ms-quote__attr {
+      font-family: var(--ff-mono);
+      font-size: var(--fs-12);
+      letter-spacing: var(--tracking-wide);
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+    }
+
+    /* Numbered programme list */
+    .ms-programme {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid var(--border-medium);
+    }
+    .ms-session {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-4);
+      padding: var(--s-7) 0;
+      border-bottom: 1px solid var(--border-medium);
+      transition: padding-left var(--dur-medium) var(--ease-out-spring);
+    }
+    @media (min-width: 768px) {
+      .ms-session {
+        grid-template-columns: 0.7fr 2fr 1.3fr;
+        gap: var(--s-7);
+        align-items: baseline;
+      }
+      .ms-session:hover { padding-left: var(--s-3); }
+    }
+    .ms-session__num {
+      font-family: var(--ff-display);
+      font-weight: 700;
+      font-size: var(--fs-display-md);
+      line-height: var(--lh-tight);
+      letter-spacing: var(--tracking-tightest);
+      color: var(--text-primary);
+    }
+    .ms-session__title {
+      font-family: var(--ff-display);
+      font-weight: 600;
+      font-size: var(--fs-h3-fluid);
+      line-height: var(--lh-snug);
+      letter-spacing: var(--tracking-tight);
+      color: var(--text-primary);
+    }
+    .ms-session__body {
+      font-size: var(--fs-16);
+      line-height: var(--lh-relaxed);
+      color: var(--text-secondary);
+    }
+    .ms-session__meta {
+      font-family: var(--ff-mono);
+      font-size: var(--fs-12);
+      letter-spacing: var(--tracking-wide);
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      margin-top: var(--s-3);
+    }
+
+    /* "Чего не делаем" — DEEP section with crossed-out promises */
+    .ms-anti {
+      display: grid;
+      gap: var(--s-7);
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) {
+      .ms-anti { grid-template-columns: repeat(3, 1fr); }
+    }
+    .ms-anti__item {
+      padding-top: var(--s-5);
+      border-top: 1px solid var(--border-on-dark);
+    }
+    .ms-anti__strike {
+      display: inline-block;
+      font-family: var(--ff-display);
+      font-weight: 600;
+      font-size: var(--fs-h3-fluid);
+      line-height: var(--lh-snug);
+      letter-spacing: var(--tracking-tight);
+      color: var(--text-on-dark);
+      position: relative;
+      margin-bottom: var(--s-4);
+    }
+    .ms-anti__strike::after {
+      content: "";
+      position: absolute;
+      left: -0.1em;
+      right: -0.1em;
+      top: 55%;
+      height: 3px;
+      background: var(--accent-lime);
+      transform: rotate(-1.5deg);
+    }
+    .ms-anti__body {
+      font-size: var(--fs-16);
+      line-height: var(--lh-relaxed);
+      color: var(--text-secondary-on-dark);
+    }
+
+    /* Path diagram — Workshop → Academy */
+    .ms-path {
+      display: grid;
+      gap: var(--s-5);
+      grid-template-columns: 1fr;
+      counter-reset: path;
+    }
+    @media (min-width: 900px) {
+      .ms-path { grid-template-columns: repeat(4, 1fr); }
+    }
+    .ms-path__step {
+      position: relative;
+      padding: var(--s-6);
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-medium);
+      border-radius: 8px;
+      counter-increment: path;
+      transition: border-color var(--dur-medium) var(--ease-out-spring),
+                  transform var(--dur-medium) var(--ease-out-spring);
+    }
+    .ms-path__step:hover {
+      border-color: var(--text-primary);
+      transform: translateY(-3px);
+    }
+    .ms-path__step--final {
+      background: var(--neutral-900);
+      border-color: var(--neutral-900);
+      color: var(--text-on-dark);
+    }
+    .ms-path__step--final:hover { border-color: var(--accent-lime); }
+    .ms-path__step::before {
+      content: "0" counter(path);
+      display: block;
+      font-family: var(--ff-mono);
+      font-size: var(--fs-12);
+      font-weight: 500;
+      letter-spacing: var(--tracking-widest);
+      color: var(--text-tertiary);
+      margin-bottom: var(--s-5);
+    }
+    .ms-path__step--final::before { color: var(--text-tertiary-on-dark); }
+    .ms-path__title {
+      font-family: var(--ff-display);
+      font-weight: 600;
+      font-size: var(--fs-h4-fluid);
+      line-height: var(--lh-snug);
+      letter-spacing: var(--tracking-tight);
+      margin-bottom: var(--s-3);
+    }
+    .ms-path__body {
+      font-size: var(--fs-14);
+      line-height: var(--lh-relaxed);
+      color: var(--text-secondary);
+    }
+    .ms-path__step--final .ms-path__body { color: var(--text-secondary-on-dark); }
+    .ms-path__note {
+      margin-top: var(--s-6);
+      font-size: var(--fs-14);
+      color: var(--text-tertiary);
+      max-width: 60ch;
+    }
+
+    /* Spec block — pricing & conditions */
+    .ms-spec {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid var(--border-medium);
+    }
+    .ms-spec__row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-2);
+      padding: var(--s-5) 0;
+      border-bottom: 1px solid var(--border-medium);
+    }
+    @media (min-width: 768px) {
+      .ms-spec__row {
+        grid-template-columns: 0.5fr 1.2fr;
+        gap: var(--s-7);
+        align-items: baseline;
+      }
+    }
+    .ms-spec__key {
+      font-family: var(--ff-mono);
+      font-size: var(--fs-12);
+      letter-spacing: var(--tracking-wide);
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+    }
+    .ms-spec__val {
+      font-size: var(--fs-18);
+      color: var(--text-primary);
+      font-family: var(--ff-display);
+      font-weight: 600;
+      letter-spacing: var(--tracking-tight);
+    }
+    .ms-spec__val--lime { color: var(--text-primary); }
+    .ms-spec__val--lime::after {
+      content: "";
+      display: inline-block;
+      width: 0.5rem;
+      height: 0.5rem;
+      background: var(--accent-lime);
+      border-radius: 50%;
+      margin-left: var(--s-3);
+      transform: translateY(-3px);
+    }
+    .ms-spec__hint {
+      display: block;
+      margin-top: var(--s-2);
+      font-family: var(--ff-body);
+      font-weight: 400;
+      font-size: var(--fs-14);
+      color: var(--text-secondary);
+      letter-spacing: 0;
+    }
+
+    /* Status banner — "пилотный поток" */
+    .ms-status {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-3);
+      padding: var(--s-3) var(--s-4);
+      border: 1px solid var(--border-medium);
+      border-radius: 100px;
+      font-family: var(--ff-mono);
+      font-size: var(--fs-12);
+      letter-spacing: var(--tracking-wide);
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-bottom: var(--s-6);
+    }
+    .ms-status__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-lime);
+      box-shadow: 0 0 0 4px var(--accent-lime-glow);
+      animation: ms-pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes ms-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Перейти к контенту</a>
+
+  <!-- ───── Header (зеркалит остальной сайт) ───── -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="header__brand" aria-label="EDL · Главная">
+        <span style="font-family: var(--ff-display); font-weight: 800; font-size: var(--fs-20); letter-spacing: -0.04em;">EDL</span>
+      </a>
+
+      <nav class="header__nav" aria-label="Основная навигация">
+        <a href="index.html#approach">Подход</a>
+        <a href="sprint.html">Спринт</a>
+        <a href="diagnostic.html">Диагностика</a>
+        <a href="masterskaya.html" class="is-active">Мастерская</a>
+        <a href="https://t.me/elephantdreamscommunity" target="_blank" rel="noopener noreferrer">Telegram</a>
+      </nav>
+
+      <div class="header__actions">
+        <span class="header__lang">
+          <a href="masterskaya.html" class="is-active">RU</a>
+          <span aria-hidden="true">/</span>
+          <a href="en/masterskaya.html">EN</a>
+        </span>
+        <a href="#" class="btn btn--primary btn--small" data-cta="demo" data-cta-location="header">Записаться на разговор</a>
+        <button class="header__menu-toggle" data-menu-toggle aria-label="Меню" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <line x1="4" y1="8" x2="20" y2="8"/>
+            <line x1="4" y1="16" x2="20" y2="16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-menu" aria-label="Мобильное меню">
+    <ul>
+      <li><a href="index.html#approach">Подход</a></li>
+      <li><a href="sprint.html">Спринт</a></li>
+      <li><a href="diagnostic.html">Диагностика</a></li>
+      <li><a href="masterskaya.html">Мастерская</a></li>
+      <li><a href="https://t.me/elephantdreamscommunity" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+
+    <!-- ───── 01 · Hero ───── -->
+    <section class="section hero" style="min-height: 70vh;">
+      <div class="container">
+        <div style="max-width: 18ch; margin-bottom: var(--s-6);">
+          <span class="ms-status">
+            <span class="ms-status__dot"></span>
+            Пилотный поток · июнь 2026
+          </span>
+        </div>
+
+        <h1 class="hero__title" style="font-size: var(--fs-display-md); margin-bottom: var(--s-6); max-width: 18ch;">
+          Вы знаете материал.<br>
+          Делаем так, чтобы его <span class="accent">услышали</span>.
+        </h1>
+
+        <p class="hero__sub" style="max-width: 56ch; margin-bottom: var(--s-7);">
+          Онлайн-мастерская для людей с экспертизой, у которых нет опыта публичной подачи. 4–5 занятий по 90 минут. Между занятиями — задания и индивидуальный фидбек.
+        </p>
+
+        <div class="hero__cta-block">
+          <div class="cta-cluster">
+            <a href="#" class="btn btn--primary" data-cta="demo" data-cta-location="masterskaya-hero" data-magnetic>Обсудим вашу идею лекции</a>
+            <a href="#programme" class="btn btn--secondary">Программа →</a>
+          </div>
+          <p class="cta-microcopy">
+            30 минут. Расскажем формат, программу и условия. Без давления.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-bridge section-bridge--canvas-to-tinted" aria-hidden="true"></div>
+
+    <!-- ───── 02 · Что говорят авторы (kasdev quotes) ───── -->
+    <section class="section section--tinted" data-reveal>
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow"><span class="eyebrow__dot"></span>01 · Откуда идея</span>
+          <h2>Авторы сами это сказали. <span style="color: var(--text-tertiary);">Мы только записали.</span></h2>
+          <p class="lead">8 кастдевов с авторами, апрель 2026. Никто не задавал вопрос про обучение подаче — это вышло само, у четверых из восьми.</p>
+        </div>
+
+        <div class="ms-quotes">
+          <figure class="ms-quote">
+            <blockquote class="ms-quote__text">«Хочу сама научиться»</blockquote>
+            <figcaption class="ms-quote__attr">Лена · автор · апр 2026</figcaption>
+          </figure>
+          <figure class="ms-quote">
+            <blockquote class="ms-quote__text">«Очень интересно было бы научиться»</blockquote>
+            <figcaption class="ms-quote__attr">Денис · автор · апр 2026</figcaption>
+          </figure>
+          <figure class="ms-quote">
+            <blockquote class="ms-quote__text">«Мог бы вырасти как лектор»</blockquote>
+            <figcaption class="ms-quote__attr">Николай · автор · апр 2026</figcaption>
+          </figure>
+          <figure class="ms-quote">
+            <blockquote class="ms-quote__text">«Хочу опыт преподавания»</blockquote>
+            <figcaption class="ms-quote__attr">Константин · автор · апр 2026</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-bridge section-bridge--tinted-to-canvas" aria-hidden="true"></div>
+
+    <!-- ───── 03 · Кому это нужно ───── -->
+    <section class="section" data-reveal>
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow"><span class="eyebrow__dot"></span>02 · Для кого</span>
+          <h2>Кому. <span style="color: var(--text-tertiary);">Без воды.</span></h2>
+        </div>
+
+        <div class="funnel-grid">
+          <div class="funnel-card">
+            <span class="funnel-card__num">01 · Эксперт</span>
+            <div class="funnel-card__title">У вас есть тема — нет формата</div>
+            <div class="funnel-card__body">
+              Знаете материал на уровне практики или исследования. При этом не понимаете, как сделать из него лекцию, которую слушают 60 минут.
+            </div>
+          </div>
+
+          <div class="funnel-card">
+            <span class="funnel-card__num">02 · Автор</span>
+            <div class="funnel-card__title">Есть блог или курс — нет голоса</div>
+            <div class="funnel-card__body">
+              Пишете, ведёте канал, делаете контент. Хотите перейти от текста к выступлению — не хватает структуры и уверенности на старте.
+            </div>
+          </div>
+
+          <div class="funnel-card">
+            <span class="funnel-card__num">03 · Будущий лектор</span>
+            <div class="funnel-card__title">Хотите попробовать преподавать</div>
+            <div class="funnel-card__body">
+              Есть экспертиза. Есть желание читать лекции. Нет первого опыта публичной подачи и обратной связи от живой аудитории.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-bridge section-bridge--canvas-to-tinted" aria-hidden="true"></div>
+
+    <!-- ───── 04 · Программа ───── -->
+    <section class="section section--tinted" id="programme" data-reveal>
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow"><span class="eyebrow__dot"></span>03 · Программа</span>
+          <h2>Что соберёте за 4–5 занятий.</h2>
+          <p class="lead">Каждое занятие — 90 минут онлайн в группе до восьми человек. Между занятиями — задания и индивидуальный фидбек от преподавателя.</p>
+        </div>
+
+        <div class="ms-programme">
+          <div class="ms-session">
+            <div class="ms-session__num">01</div>
+            <div>
+              <div class="ms-session__title">Аудитория и обещание лекции</div>
+              <div class="ms-session__meta">90 минут · разбор тем участников</div>
+            </div>
+            <div class="ms-session__body">
+              Кому говорите. Что обещаете слушателю в первые две минуты. Без этого даже сильный материал не доходит.
+            </div>
+          </div>
+
+          <div class="ms-session">
+            <div class="ms-session__num">02</div>
+            <div>
+              <div class="ms-session__title">Структура и сценарий</div>
+              <div class="ms-session__meta">90 минут · скелет первой лекции</div>
+            </div>
+            <div class="ms-session__body">
+              Как держать внимание 60 минут. Где ставить переходы, где — паузу, где — пример. Выходите с готовой структурой собственной темы.
+            </div>
+          </div>
+
+          <div class="ms-session">
+            <div class="ms-session__num">03</div>
+            <div>
+              <div class="ms-session__title">Голос, темп, паузы</div>
+              <div class="ms-session__meta">90 минут · работа в парах</div>
+            </div>
+            <div class="ms-session__body">
+              Как звучать уверенно, не теряя себя. Не учим жестам и сценической речи. Учим говорить о теме так, чтобы материал не тонул в подаче.
+            </div>
+          </div>
+
+          <div class="ms-session">
+            <div class="ms-session__num">04</div>
+            <div>
+              <div class="ms-session__title">Пробное выступление в группе</div>
+              <div class="ms-session__meta">90 минут · мини-лекция каждого</div>
+            </div>
+            <div class="ms-session__body">
+              10 минут вашей лекции перед группой. Обратная связь от преподавателя и других участников. Первый реальный опыт под безопасным взглядом.
+            </div>
+          </div>
+
+          <div class="ms-session">
+            <div class="ms-session__num">05</div>
+            <div>
+              <div class="ms-session__title">Финальный разбор и следующий шаг</div>
+              <div class="ms-session__meta">90 минут · выход с планом</div>
+            </div>
+            <div class="ms-session__body">
+              Итоги потока. Кто готов — получает конкретное предложение запустить лекцию через Академию EDL. Принимать его необязательно.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-bridge section-bridge--tinted-to-deep" aria-hidden="true"></div>
+
+    <!-- ───── 05 · Чего не делаем ───── -->
+    <section class="section section--deep" data-reveal>
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow"><span class="eyebrow__dot"></span>04 · Отстройка</span>
+          <h2>Чего не делаем.</h2>
+          <p class="lead">Чтобы не путать ожидания.</p>
+        </div>
+
+        <div class="ms-anti">
+          <div class="ms-anti__item">
+            <div class="ms-anti__strike">Курс публичных выступлений</div>
+            <div class="ms-anti__body">
+              Не учим жестам, дыханию и сценической речи. Это другая профессия — в ней есть сильные люди, и это не мы.
+            </div>
+          </div>
+          <div class="ms-anti__item">
+            <div class="ms-anti__strike">«Как продать себя»</div>
+            <div class="ms-anti__body">
+              Учим говорить о теме, а не о себе. Личный бренд — побочный эффект сильной лекции, а не цель работы.
+            </div>
+          </div>
+          <div class="ms-anti__item">
+            <div class="ms-anti__strike">«Упрощайте контент»</div>
+            <div class="ms-anti__body">
+              Сохраняем глубину. Меняем подачу. Аудитория умнее, чем думают авторы массовых курсов — это видно по кастдевам.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-bridge section-bridge--deep-to-canvas" aria-hidden="true"></div>
+
+    <!-- ───── 06 · Что после ───── -->
+    <section class="section" data-reveal>
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow"><span class="eyebrow__dot"></span>05 · Что после</span>
+          <h2>Финальное занятие — конкретное предложение.</h2>
+          <p class="lead">Кто готов — выходит из мастерской с лекцией для запуска через Академию EDL. Не намёком, не «подумай», а с условиями и сроком.</p>
+        </div>
+
+        <div class="ms-path">
+          <div class="ms-path__step">
+            <div class="ms-path__title">Поток мастерской</div>
+            <div class="ms-path__body">4–5 занятий по 90 минут. Структура. Подача. Пробное выступление.</div>
+          </div>
+          <div class="ms-path__step">
+            <div class="ms-path__title">Готовая лекция</div>
+            <div class="ms-path__body">Тема, скелет, первый прогон. У вас есть продукт, который можно запускать.</div>
+          </div>
+          <div class="ms-path__step">
+            <div class="ms-path__title">Предложение от Академии</div>
+            <div class="ms-path__body">Продакшн, маркетинг и продажи на стороне EDL. Условия пилота — 50/50.</div>
+          </div>
+          <div class="ms-path__step ms-path__step--final">
+            <div class="ms-path__title">Запуск пилотной лекции</div>
+            <div class="ms-path__body">Первая платная лекция перед живой аудиторией. С обратной связью и цифрами.</div>
+          </div>
+        </div>
+
+        <p class="ms-path__note">
+          Это не обязательное условие. Можно пройти Мастерскую и работать самостоятельно — программа собрана так, чтобы быть полезной без следующего шага.
+        </p>
+      </div>
+    </section>
+
+    <div class="section-bridge section-bridge--canvas-to-tinted" aria-hidden="true"></div>
+
+    <!-- ───── 07 · Условия ───── -->
+    <section class="section section--tinted" data-reveal>
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow"><span class="eyebrow__dot"></span>06 · Условия</span>
+          <h2>Состав. Цена. Сроки.</h2>
+        </div>
+
+        <div class="ms-spec">
+          <div class="ms-spec__row">
+            <div class="ms-spec__key">Цена за поток</div>
+            <div class="ms-spec__val ms-spec__val--lime">
+              12 000–15 000 ₽
+              <span class="ms-spec__hint">Финальная цифра — после PMF-теста до конца апреля. Те, кто записался раньше — фиксируют нижнюю границу.</span>
+            </div>
+          </div>
+
+          <div class="ms-spec__row">
+            <div class="ms-spec__key">Формат</div>
+            <div class="ms-spec__val">
+              4–5 занятий по 90 минут · Zoom
+              <span class="ms-spec__hint">Видеозапись — да. Между занятиями — задания и индивидуальный фидбек от преподавателя.</span>
+            </div>
+          </div>
+
+          <div class="ms-spec__row">
+            <div class="ms-spec__key">Размер группы</div>
+            <div class="ms-spec__val">
+              5–8 человек
+              <span class="ms-spec__hint">Группа меньше пяти — поток не запускаем, деньги возвращаются. Группа больше восьми — берём в следующий поток.</span>
+            </div>
+          </div>
+
+          <div class="ms-spec__row">
+            <div class="ms-spec__key">Старт первого потока</div>
+            <div class="ms-spec__val">
+              Июнь 2026
+              <span class="ms-spec__hint">Набор — май. Решение «запускаем / переносим» — 25 мая, по числу предоплат.</span>
+            </div>
+          </div>
+
+          <div class="ms-spec__row">
+            <div class="ms-spec__key">Преподаватель</div>
+            <div class="ms-spec__val">
+              Приглашённый эксперт
+              <span class="ms-spec__hint">Практикующий лектор и методист. Имя называем после подписания контракта — конец апреля.</span>
+            </div>
+          </div>
+
+          <div class="ms-spec__row">
+            <div class="ms-spec__key">Возврат</div>
+            <div class="ms-spec__val">
+              100% при отмене потока
+              <span class="ms-spec__hint">Если не наберём минимум пять человек — поток переносим на сентябрь, оплата возвращается полностью в течение 5 рабочих дней.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-bridge section-bridge--tinted-to-canvas" aria-hidden="true"></div>
+
+    <!-- ───── 08 · FAQ ───── -->
+    <section class="section" data-reveal>
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow"><span class="eyebrow__dot"></span>07 · Частые вопросы</span>
+          <h2>FAQ.</h2>
+        </div>
+
+        <div class="faq">
+          <div class="faq-item">
+            <button class="faq-item__trigger" data-faq-id="ms-when" aria-expanded="false">
+              <span>Когда первый поток?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__content">
+              <div class="faq-item__inner">
+                <p>Июнь 2026. Набор группы — май. Запуск только при наборе минимум пяти оплат. Если группа не соберётся — деньги возвращаются полностью, поток переносится на сентябрь.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-item__trigger" data-faq-id="ms-teacher" aria-expanded="false">
+              <span>Кто будет вести?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__content">
+              <div class="faq-item__inner">
+                <p>Приглашённый преподаватель — практикующий лектор и методист. Контракт фиксированный, на 2–3 потока. Имя объявляем после подписания — до конца апреля.</p>
+                <p>Команда EDL — Екатерина Жиганова и Надежда — отвечают за продукт, набор и связку с Академией. Не ведут занятия сами.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-item__trigger" data-faq-id="ms-vs-public-speaking" aria-expanded="false">
+              <span>Чем это отличается от курсов публичных выступлений?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__content">
+              <div class="faq-item__inner">
+                <p>Курсы публичных выступлений — про сцену, голос, дыхание, жесты. Это другая профессия.</p>
+                <p>Мастерская — про структуру лекции, аудиторию и формат. Что обещать слушателю. Как держать внимание 60 минут. Как сохранить глубину темы при переходе из текста в выступление.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-item__trigger" data-faq-id="ms-academy-required" aria-expanded="false">
+              <span>Обязательно идти в Академию после Мастерской?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__content">
+              <div class="faq-item__inner">
+                <p>Нет. Финальное занятие включает конкретное предложение запустить лекцию через Академию EDL — но принимать его необязательно. Многие участники уйдут с готовой структурой и будут работать самостоятельно.</p>
+                <p>Если решите, что Академия — следующий шаг, условия пилота: 50/50 на первой лекции. Все детали — на финальном занятии.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-item__trigger" data-faq-id="ms-already-have-lecture" aria-expanded="false">
+              <span>У меня уже есть готовая лекция. Подходит?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__content">
+              <div class="faq-item__inner">
+                <p>Скорее всего нет. Мастерская — про сборку первой лекции с нуля. Если у вас уже есть готовый материал и опыт выступлений, лучше обсудить пилот через Академию напрямую.</p>
+                <p>Запишитесь на разговор — посмотрим лекцию и скажем честно: подходит Мастерская или сразу Академия.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-bridge section-bridge--canvas-to-deep" aria-hidden="true"></div>
+
+    <!-- ───── 09 · Final CTA ───── -->
+    <section class="section section--deep" data-reveal>
+      <div class="container">
+        <div style="max-width: 60ch;">
+          <span class="eyebrow"><span class="eyebrow__dot"></span>08 · Следующий шаг</span>
+          <h2 style="margin-bottom: var(--s-6);">Расскажите о вашей идее лекции.</h2>
+          <p class="lead" style="margin-bottom: var(--s-7);">
+            30 минут разговора. Поймём, подходит ли формат под вашу тему, и расскажем, когда стартует первый поток. Без обязательств.
+          </p>
+          <div class="cta-cluster">
+            <a href="#" class="btn btn--primary" data-cta="demo" data-cta-location="masterskaya-final" data-magnetic>Записаться на разговор</a>
+            <a href="https://t.me/evzhiganova8888" target="_blank" rel="noopener noreferrer" class="btn btn--ghost-on-dark">Написать в Telegram</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ───── Footer (зеркалит остальной сайт) ───── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand-name">EDL</div>
+          <p class="footer__brand-sub">
+            Elephant Dreams Lab. Собираем фаундерам операционную систему бизнеса. Чтобы было прозрачно. Чтобы можно было управлять с одного экрана.
+          </p>
+        </div>
+
+        <div>
+          <span class="footer__col-title">Услуги</span>
+          <ul class="footer__list">
+            <li><a href="sprint.html">AI Operations Sprint</a></li>
+            <li><a href="diagnostic.html">Диагностика</a></li>
+            <li><a href="masterskaya.html">Мастерская Авторов</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <span class="footer__col-title">Команда</span>
+          <ul class="footer__list">
+            <li><a href="index.html#approach">Подход</a></li>
+            <li><a href="index.html#proof">Наша система</a></li>
+            <li><a href="https://t.me/elephantdreamscommunity" target="_blank" rel="noopener noreferrer">Канал в Telegram</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <span class="footer__col-title">Контакты</span>
+          <ul class="footer__list">
+            <li><a href="https://t.me/evzhiganova8888" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+            <li><a href="mailto:hello@elephantdreams.ru">hello@elephantdreams.ru</a></li>
+            <li><a href="https://calendly.com/evzhiganova8888/30min" target="_blank" rel="noopener noreferrer">Calendly</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>© 2026, Elephant Dreams Lab</span>
+        <span class="footer__lang">
+          <a href="masterskaya.html" class="is-active">RU</a>
+          <span aria-hidden="true">·</span>
+          <a href="en/masterskaya.html">EN</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky mobile CTA -->
+  <div class="sticky-cta">
+    <a href="#" class="btn btn--primary" data-cta="demo" data-cta-location="sticky-mobile">Обсудим вашу идею</a>
+  </div>
+
+  <!-- Calendly Modal -->
+  <div id="calendly-modal" class="modal" hidden role="dialog" aria-labelledby="modal-title" aria-modal="true">
+    <div class="modal__overlay" data-modal-close></div>
+    <div class="modal__content">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">×</button>
+      <div class="modal__header">
+        <h2 class="modal__title" id="modal-title">Мастерская Авторов · разговор</h2>
+        <p class="modal__sub">30 минут. Расскажем формат, программу и условия. Без давления.</p>
+      </div>
+      <div class="calendly-inline-widget"
+           data-url="https://calendly.com/evzhiganova8888/30min"
+           style="min-width:320px;">
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js" defer></script>
+</body>
+</html>
